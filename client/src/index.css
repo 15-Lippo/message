@@ -79,6 +79,7 @@ body {
   -webkit-text-fill-color: transparent;
 }
 
+/* TODO Fix these errors : unknown rule at tailwind*/
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

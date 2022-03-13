@@ -1,3 +1,5 @@
+
+// main sections
 export { default as Loader } from './loader/Loader'
 export { default as Footer } from './footer/Footer'
 export { default as Navbar } from './navbar/Navbar'
