@@ -1,0 +1,29 @@
+{
+  "name": "smart_contract",
+  "version": "1.0.0",
+  "description": "Smart contract dependencies including dev",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "npm",
+    "hardhat",
+    "hardhat-waffle",
+    "ethereum-waffle",
+    "chai",
+    "nomiclabs",
+    "hardhat-ethers",
+    "ethers"
+  ],
+  "author": "chinalantern",
+  "license": "ISC",
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.0.5",
+    "@nomiclabs/hardhat-waffle": "^2.0.3",
+    "chai": "^4.3.6",
+    "ethereum-waffle": "^3.4.0",
+    "ethers": "^5.6.0",
+    "hardhat": "^2.9.1"
+  }
+}
