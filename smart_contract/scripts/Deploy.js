@@ -5,6 +5,7 @@ const main = async () => {
 
   await transactions.deployed()
 
+  // TODO Remove
   console.log('Transactions deployed to:', transactions.address)
 }
 

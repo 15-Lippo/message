@@ -1,9 +1,13 @@
+import { BsShieldFillCheck } from 'react-icons/bs'
+import { BiShearchALt } from 'react-icons/bi'
+import { RiHeart2FillCheck } from 'react-icons/ri'
+
 const Services = () => {
-
-    return (
-        <h1>Services</h1>
-    )
+  return (
+    <div className="flex w-full justify-center items-center gradient-bg-services">
+      <div className="flex mf:flex-row flex-col items-center justify-between md:p-20 py-12 px-4"></div>
+    </div>
+  )
 }
-
 
 export default Services

@@ -1,10 +1,11 @@
 const Loader = () => {
 
     return (
-        // update loader 
+        // TODO update loader 
         <div className="flex justify-content items-center py-3">
             <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-red-700" />
         </div>
+
     )
 }
 

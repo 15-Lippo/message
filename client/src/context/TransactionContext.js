@@ -33,7 +33,7 @@ export const TransactionProvider = ({ children }) => {
     }
 
     const checkIfMetamaskEnabled = async () => {
-        // check for metamask plugin
+        // check if metamask signed in
         if (!ethereum) return alert("You must install the metamask plugin in order to proceed.")
     
        try {
@@ -42,10 +42,10 @@ export const TransactionProvider = ({ children }) => {
         
             if (accounts.length) {
                 setCurrentAccount(accounts[0])
-                // get all transactions
-        } else {
-            console.log('No accounts found')
-            }
+                
+            } else {
+                console.log('No accounts found')
+                }
            
        } catch (error) {
         console.log(error)
@@ -59,7 +59,7 @@ export const TransactionProvider = ({ children }) => {
         if (!ethereum) return alert("You must install the metamask plugin in order to proceed.")
 
         try {            
-            // request an object that returns array of all eth accounts
+            // request with method that returns array of all eth accounts
             const accounts = await ethereum.request({ method: 'eth_requestAccounts' })
            
             setCurrentAccount(accounts[0]) 
@@ -114,9 +114,12 @@ export const TransactionProvider = ({ children }) => {
         }
     }
 
+    // TODO add functionality for when metamask account becomes 
+    // TODO disconnected and needs to be detected and auto announcec
+
 
     return (
-        <TransactionContext.Provider value={ { connectWallet, currentAccount, formData, sendTransaction, changeHandler } } >
+        <TransactionContext.Provider value={ { connectWallet, currentAccount, formData, sendTransaction, changeHandler, isLoading } } >
             {children}
         </TransactionContext.Provider>
     )
