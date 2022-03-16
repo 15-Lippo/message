@@ -1,5 +1,5 @@
 const main = async () => {
-  // We get the contract to deploy
+  // get contract to deploy
   const Transactions = await hre.ethers.getContractFactory('Transactions')  // like factory. generates instances of contract
   const transactions = await Transactions.deploy()
 
@@ -8,7 +8,7 @@ const main = async () => {
   console.log('Transactions deployed to:', transactions.address)
 }
 
-// Pattern to use async/await everywhere and properly handle errors
+// pattern to use async/await everywhere; properly handle errors
 const runMain = async () => {
   try {
     await main()
@@ -19,4 +19,4 @@ const runMain = async () => {
   }
 }
 
-runMain(  );
+runMain();
