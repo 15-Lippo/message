@@ -28,7 +28,7 @@ const Footer = () => {
       </div>
       <div className="sm:w-[90%] w-full h-[0.25px] bg-gray-400 mt-5" />
       <div className="sm:w-[90%] w-full flex justify-between items-center mt-3">
-        <p className="text-white text-small text-center">Prime Crypto 2022</p>
+        <p className="text-white text-small text-center">© 2022 Prime Crypto</p>
         <p className="text-white text-small text-center">All Rights Reserved</p>
       </div>
     </div>

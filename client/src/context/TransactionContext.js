@@ -79,7 +79,7 @@ export const TransactionProvider = ({ children }) => {
         setCurrentAccount(accounts[0])
         getAlltransactions()
       } else {
-        console.log('No accounts found')
+        console.log('No metamask accounts found')
       }
     } catch (error) {
       console.log(error)
@@ -108,7 +108,11 @@ export const TransactionProvider = ({ children }) => {
       // request with method that returns array of all eth accounts
       const accounts = await ethereum.request({ method: 'eth_requestAccounts' })
 
-      setCurrentAccount(accounts[0])
+      if (accounts.length) {
+        setCurrentAccount(accounts[0])
+      } else {
+        console.log('No wallet found')
+      }
     } catch (error) {
       console.log(error)
       throw new Error('No ethereum account in wallet object.')
@@ -127,7 +131,7 @@ export const TransactionProvider = ({ children }) => {
       const transactionContract = getEthereumContract()
       const parsedAmount = ethers.utils.parseEther(amount)
 
-      // TODO Create Slow, Medium, Fast gas option feature
+      // TODO Create Slow, Medium, Fast gas option feature for Gwei
       // TODO mock eth-converter.com
 
       // Transaction #1 Send
@@ -160,7 +164,9 @@ export const TransactionProvider = ({ children }) => {
       const transactionCount = await transactionContract.getTransactionCount()
 
       setTransactionCount(transactionCount.toNumber())
-      window.reload()
+      
+      window.location.reload()
+
     } catch (error) {
       console.log(error)
       throw new Error('No ethereum account in wallet object.')
