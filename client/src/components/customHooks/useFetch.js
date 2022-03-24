@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-const API_KEY = process.env.REACT_APP_GIPHY_API_KEY
+const { REACT_APP_GIPHY_API } = process.env
 
 const useFetch = ({ keyword }) => {
   const [giphyUrl, setGiphyUrl] = useState('')
@@ -11,17 +11,18 @@ const useFetch = ({ keyword }) => {
 
   const fetchGiphy = async () => {
     try {
-      console.log(`Fetching giphy... with api key ${API_KEY}`)
       const response = await fetch(
-        `https://api.giphy.com/v1/gifs/search?api_key${API_KEY}&q=${keyword}
+        `https://api.giphy.com/v1/gifs/search?api_key=${REACT_APP_GIPHY_API}&q=${keyword
           .split(' ')
-          .join('')&limit=1`
+          .join('')}&limit=1`
       )
+
       const { data } = await response.json()
 
       setGiphyUrl(data[0]?.images?.downsized_medium?.url)
+      
     } catch (error) {
-      console.log(`Error upon fetching giphy with api key: ${API_KEY}`)
+      console.log('Error in gif api retreival: ', error)
       setGiphyUrl(
         'https://i.pinimg.com/originals/68/a0/9e/68a09e774e98242871c2db0f99307420.gif'
       )

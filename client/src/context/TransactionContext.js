@@ -22,6 +22,7 @@ const getEthereumContract = () => {
 
 export const TransactionProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false)
+  const [transactions, setTransactions] = useState([])
   const [transactionCount, setTransactionCount] = useState(
     localStorage.getItem('transactionCount')
   )
@@ -35,10 +36,34 @@ export const TransactionProvider = ({ children }) => {
 
   useEffect(() => {
     checkIfMetamaskEnabled()
+    checkIfTransactionsExist()
   }, [])
 
   const changeHandler = (event, name) => {
     setFormData((prevState) => ({ ...prevState, [name]: event.target.value }))
+  }
+
+  const getAlltransactions = async () => {
+    try {
+      const transactionContract = getEthereumContract()
+      const availableTransctions =
+        await transactionContract.getAlltransactions()
+      const structuredTransactions = availableTransctions.map(
+        (transaction) => ({
+          addressTo: transaction.receiver,
+          addressFrom: transaction.sender,
+          timestamp: new Date(
+            transaction.timestamp.toNumber() * 1000
+          ).toLocaleString(),
+          message: transaction.message,
+          keyword: transaction.keyword,
+          amount: parseInt(transaction.amount._hex) / 10 ** 18, // convert from Gwei to ether
+        })
+      )
+      setTransactions(structuredTransactions)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   const checkIfMetamaskEnabled = async () => {
@@ -52,12 +77,24 @@ export const TransactionProvider = ({ children }) => {
 
       if (accounts.length) {
         setCurrentAccount(accounts[0])
+        getAlltransactions()
       } else {
         console.log('No accounts found')
       }
     } catch (error) {
       console.log(error)
       throw new Error('No ethereum account in wallet object.')
+    }
+  }
+
+  const checkIfTransactionsExist = async () => {
+    try {
+      const transactionContract = getEthereumContract()
+      const transactionCount = await transactionContract.getTransactionCount()
+      window.localStorage.setItem('transactionCount', transactionCount)
+    } catch (error) {
+      console.log(error)
+      throw new Error('No ethereum objects.')
     }
   }
 
@@ -92,6 +129,7 @@ export const TransactionProvider = ({ children }) => {
 
       // TODO Create Slow, Medium, Fast gas option feature
       // TODO mock eth-converter.com
+
       // Transaction #1 Send
       await ethereum.request({
         method: 'eth_sendTransaction',
@@ -114,15 +152,15 @@ export const TransactionProvider = ({ children }) => {
       )
 
       setIsLoading(true)
-      console.log(`Loading - ${transactionHash.hash}`)
+
       // ethers resolve transaction blockchain receipt
       await transactionHash.wait()
       setIsLoading(false)
-      console.log(`Success - ${transactionHash.hash}`)
 
       const transactionCount = await transactionContract.getTransactionCount()
 
       setTransactionCount(transactionCount.toNumber())
+      window.reload()
     } catch (error) {
       console.log(error)
       throw new Error('No ethereum account in wallet object.')
@@ -140,6 +178,7 @@ export const TransactionProvider = ({ children }) => {
         sendTransaction,
         changeHandler,
         isLoading,
+        transactions,
       }}
     >
       {children}
